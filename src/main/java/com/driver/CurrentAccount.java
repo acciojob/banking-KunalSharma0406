@@ -1,7 +1,6 @@
 package com.driver;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class CurrentAccount extends BankAccount{
     String tradeLicenseId; //consists of Uppercase English characters only
@@ -31,18 +30,24 @@ public class CurrentAccount extends BankAccount{
         // If the license Id is valid, do nothing
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
-        Map<Character, Integer> frequencyMap = new HashMap<>();
-        for (int i = 0; i < this.tradeLicenseId.length(); i++) {
+        int[] charCounts = new int[256]; // assumes ASCII characters
+        for (int i = 0; i <this.tradeLicenseId.length(); i++) {
             char c = this.tradeLicenseId.charAt(i);
-            frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+            charCounts[c]++;
         }
 
-        for (char c : frequencyMap.keySet()) {
-            if (frequencyMap.get(c) > (this.tradeLicenseId.length() + 1) / 2) {
-                throw new Exception("Valid License ID cannot be generated.");
+        int maxCount = 0;
+        for (int i = 0; i < charCounts.length; i++) {
+            if (charCounts[i] > maxCount) {
+                maxCount = charCounts[i];
             }
+        }
+
+        if (maxCount > (this.tradeLicenseId.length() + 1) / 2) {
+            throw new Exception("Valid License ID cannot be generated.");
         }
     }
     }
+
 
 
