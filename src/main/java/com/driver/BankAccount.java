@@ -42,16 +42,23 @@ this.minBalance=minBalance;
 
     public String generateAccountNumber(int digits, int sum) throws Exception{
         String AccountNumber="";
-       if(digits>9 || sum > 9*digits){
+        int count=0;
+       if( sum > 9*digits){
            throw new Exception("Account Number can not be generated");//Each digit of an account number can lie between 0 and 9 (both inclusive)
        }
        while(sum>=9){
            AccountNumber=AccountNumber+9;
            sum=sum-9;
        }
+
        if(sum>0){
            AccountNumber=AccountNumber+sum;
        }
+        while (count < digits)
+        {
+            AccountNumber += "0";
+            count++;
+        }
         //Generate account number having given number of 'digits' such that the sum of digits is equal to 'sum'
         //If it is not possible, throw "Account Number can not be generated" exception
 
